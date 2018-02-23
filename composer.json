@@ -1,10 +1,14 @@
 {
-    "name": "6by6/float-api",
+    "name": "dlabs/float-api",
     "description": "PHP API for the Float Resourcing App",
     "version": "0.0.2",
     "type": "library",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Pete",
+            "email": "peter.pohar@dlabs.si"
+        },
         {
             "name": "Daniel Ness",
             "email": "daniel@sixbysix.co.uk"
