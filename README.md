@@ -1,5 +1,6 @@
 # float-sdk
 Float API for PHP (https://www.float.com/)
+Forked from 6by6, implemented v3 API support (was v1)
 
 ## Installation
 You can install this library via [Composer](https://getcomposer.org/download/):
@@ -55,6 +56,10 @@ We have covered the following entities:
 
 
 ## Changelist
+
+### v0.0.2
+- API v3 support (not completed yet)
+- Tests now failing ;)
 
 ### v0.0.1
 - First commit

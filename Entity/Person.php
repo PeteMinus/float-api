@@ -143,7 +143,7 @@ class Person extends AbstractResourceEntity
 
     /**
      * @var \DateTime
-     * @Type("DateTime<'Y-m-d'>")
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @Groups({"get", "add", "update"})
      */
     protected $created;

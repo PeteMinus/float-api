@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class FloatClient
 {
-    const BASE_URL = "https://api.float.com/api/v1/";
+    const BASE_URL = "https://api.float.com/v3/";
 
     /** @var  GuzzleClient */
     protected static $httpClient;

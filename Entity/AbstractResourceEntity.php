@@ -16,7 +16,7 @@ abstract class AbstractResourceEntity extends AbstractEntity
             $uri = sprintf("%s/%d", static::getResourceEndpoint(), $this->getId());
         } else {
             // create a new instance
-            $payload = $this->serialize(['post']);
+            $payload = $this->serialize(['post', 'add']);
             $method = 'post';
             $uri = static::getResourceEndpoint();
         }

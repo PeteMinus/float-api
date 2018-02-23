@@ -35,6 +35,11 @@ class TimeoffType extends AbstractResourceEntity
      */
     protected $createdBy;
 
+    public function getId()
+    {
+        return $this->getTimeoffTypeId();
+    }
+
     /**
      * @return int
      */
@@ -109,12 +114,12 @@ class TimeoffType extends AbstractResourceEntity
 
     public static function getResourceName()
     {
-        return 'timeoff_types';
+        return 'timeoff-types';
     }
 
     public static function getResourceEndpoint()
     {
-        return 'timeoff_types';
+        return 'timeoff-types';
     }
 
     public static function getIdKey()

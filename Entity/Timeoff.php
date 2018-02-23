@@ -4,6 +4,7 @@ namespace SixBySix\Float\Entity;
 
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\SerializedName;
 
 class Timeoff extends AbstractResourceEntity
 {
@@ -18,6 +19,7 @@ class Timeoff extends AbstractResourceEntity
      * @var int
      * @Type("integer")
      * @Groups({"get", "update", "add"})
+     * @SerializedName("timeoff_type_id");
      */
     protected $timeoffTypeId;
 
@@ -100,10 +102,15 @@ class Timeoff extends AbstractResourceEntity
 
     /**
      * @var int
-     * @Type("integer")
+     * @Type("array")
      * @Groups({"update", "post", "get"})
      */
-    protected $peopleId;
+    protected $peopleIds;
+
+    public function getId()
+    {
+        return $this->getTimeoffId();
+    }
 
     /**
      * @return int
@@ -342,18 +349,18 @@ class Timeoff extends AbstractResourceEntity
     /**
      * @return int
      */
-    public function getPeopleId()
+    public function getPeopleIds()
     {
         return $this->peopleId;
     }
 
     /**
-     * @param int $peopleId
+     * @param int $peopleIds
      * @return Timeoff
      */
-    public function setPeopleId($peopleId)
+    public function setPeopleIds(array $peopleIds)
     {
-        $this->peopleId = $peopleId;
+        $this->peopleIds = $peopleIds;
         return $this;
     }
 

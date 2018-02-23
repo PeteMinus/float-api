@@ -2,6 +2,7 @@
 
 namespace SixBySix\Float\Entity;
 
+use Float\Client\Model\Person;
 use SixBySix\Float\FloatClient;
 use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\Groups;
@@ -439,6 +440,7 @@ class Task extends AbstractResourceEntity
     {
         $this->person = $person;
         $this->peopleId = $person->getId();
+        $this->personName = $person->getName();
     }
 
     /**
@@ -460,6 +462,7 @@ class Task extends AbstractResourceEntity
     {
         $this->project = $project;
         $this->projectId = $project->getId();
+        $this->projectName = $project->getProjectName();
         return $this;
     }
 
@@ -485,7 +488,7 @@ class Task extends AbstractResourceEntity
         return $this;
     }
 
-    public static function getAll(array $opts = [])
+    public static function getAll(array $opts = [], $people = null, $projects = null)
     {
         $opts = static::formatQueryOpts($opts);
 
@@ -497,10 +500,19 @@ class Task extends AbstractResourceEntity
             return $collection;
         }
 
-        foreach ($response['people'] as $person) {
-            foreach ($person['tasks'] as $taskData) {
-                $collection[] = static::deserialize($taskData);
+        foreach ($response as $taskData) {
+            $data = static::deserialize($taskData);
+            $person = (null !== $people) ? self::findElement($people, $data->getPeopleId()) : null;
+            $project = (null !== $projects) ? self::findElement($projects, $data->getProjectId()) : null;
+
+            if (null !== $person) {
+                $data->setPerson($person);
             }
+            if (null !== $project) {
+                $data->setProject($project);
+            }
+
+            $collection[] = $data;
         }
 
         return $collection;
@@ -510,9 +522,9 @@ class Task extends AbstractResourceEntity
      * @param $person
      * @param \DateTime|null $startDay
      * @param null $weeks
-     * @return \YaLinqo\Enumerable
+     * @return array
      */
-    public static function getByPerson($person, \DateTime $startDay = null, $weeks = null)
+    public static function getByPerson($person, \DateTime $startDay = null, $weeks = null, $people = null, $projects = null)
     {
         /** @var int $personId */
         $personId = ($person instanceof Person) ? $person->getId() : (int) $person;
@@ -524,7 +536,21 @@ class Task extends AbstractResourceEntity
             'weeks' => $weeks,
         ];
 
-        return static::query($opts);
+        $response = static::query($opts);
+        foreach ($response as $data) {
+            $person = (null !== $people) ? self::findElement($people, $data->getPeopleId()) : null;
+            $project = (null !== $projects) ? self::findElement($projects, $data->getProjectId()) : null;
+
+            if (null !== $person) {
+                $data->setPerson($person);
+            }
+            if (null !== $project) {
+                $data->setProject($project);
+            }
+
+            $collection[] = $data;
+        }
+        return $collection;
     }
 
     public static function formatQueryOpts(array $opts)

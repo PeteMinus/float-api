@@ -8,7 +8,6 @@ use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
 use SixBySix\Float\Exception;
 use SixBySix\Float\FloatClient;
-use YaLinqo\Enumerable;
 
 abstract class AbstractEntity
 {
@@ -29,12 +28,23 @@ abstract class AbstractEntity
             return $collection;
         }
 
-        foreach ($response[static::getResourceName()] as $entityData) {
+        foreach ($response as $entityData) {
             $entity = static::deserialize($entityData);
             $collection[] = $entity;
         }
 
         return $collection;
+    }
+
+
+    public static function findElement($array, $searchedValue) {
+        $element = array_filter(
+            $array,
+            function ($e) use (&$searchedValue) {
+                return $e->getId() == $searchedValue;
+            }
+        );
+        return reset($element);
     }
 
     /**
@@ -46,9 +56,7 @@ abstract class AbstractEntity
      */
     public static function query(array $opts = [])
     {
-        return Enumerable::from(
-            static::getAll($opts)
-        );
+        return static::getAll($opts);
     }
 
     public static function getById($id)

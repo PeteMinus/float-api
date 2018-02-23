@@ -4,6 +4,7 @@ namespace SixBySix\Float\Entity;
 
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\SerializedName;
 use SixBySix\Float\FloatClient;
 
 class Project extends AbstractResourceEntity
@@ -19,7 +20,9 @@ class Project extends AbstractResourceEntity
      * @var string
      * @Type("string")
      * @Groups({"get", "update", "add"})
+     * @SerializedName("name")
      */
+
     protected $projectName;
 
     /**
@@ -59,14 +62,14 @@ class Project extends AbstractResourceEntity
 
     /**
      * @var \DateTime
-     * @Type("DateTime<'Y-m-d'>")
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @Groups({"get", "update", "add"})
      */
     protected $created;
 
     /**
      * @var \DateTime
-     * @Type("DateTime<'U'>")
+     * @Type("DateTime<'Y-m-d H:i:s'>")
      * @Groups({"get", "update", "add"})
      */
     protected $modified;
